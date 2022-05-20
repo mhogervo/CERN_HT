@@ -1,0 +1,219 @@
+\documentclass[10pt]{article}
+
+\pdfoutput=1 
+\def\baselinestretch{1.06} 
+
+%\usepackage[math]{iwona}
+\usepackage[T1]{fontenc}
+
+\usepackage{amsmath,amssymb,amsfonts,mathrsfs,amsthm}
+%\usepackage{cmbright}
+\usepackage[inline]{showlabels} 
+\usepackage[]{graphicx}
+\usepackage{xcolor,dsfont}
+\definecolor{darkblue}{rgb}{0.1,0.1,.7}
+\usepackage[colorlinks, linkcolor=darkblue, citecolor=darkblue, urlcolor=darkblue, linktocpage]{hyperref} 
+\usepackage[square, comma, compress,numbers]{natbib}
+\usepackage{geometry}
+\geometry{letterpaper,tmargin=3.0cm,bmargin=3.0cm,lmargin=3.0cm,rmargin=3.0cm}
+\usepackage[margin=10pt,font=small,labelfont=bf]{caption}
+%\numberwithin{equation}{section}
+
+\usepackage{youngtab}
+
+%%%%%%%%%%%%% specific commands
+
+\theoremstyle{plain}
+\newtheorem*{lem}{Lemma}
+\newtheorem{lemnum}{Lemma}[section]
+\newtheorem*{fact}{Fact}
+\theoremstyle{remark}
+\newtheorem*{rem}{Remark}
+
+%\def\zcc{\mathbb{Z}_2^{\mathcal{C}}}
+\def\zcc{\mathcal{C}}
+\def\vol{\text{vol}(S^{d-1})}
+\def\bdelta{\widetilde{\boldsymbol{a}}}
+\def\bla{\boldsymbol{\lambda}}
+\def\bxi{\boldsymbol{\xi}}
+\def\Ricci{\mca{R}}
+\def\sU{\mathrm{U}}
+\def\ssU{\mathrm{SU}}
+\def\NN{\mathrm{N}}
+\def\SS{\mathrm{S}}
+\def\be{\mathbf{e}}
+\def\bm{\mathbf{m}}
+\def\lmax{{\l_\text{max}}}
+%% \def\vol{\text{vol}}
+\def\qaq{\quad \text{and} \quad}
+\def\qor{\quad \text{or} \quad}
+\def\dag{\dagger}
+\def\phs{{\phantom{*}}}
+\def\phd{{\phantom{\dagger}}}
+\def\wh{\widehat}
+\def\vphi{\varphi}
+\def\wt{\widetilde}
+\def\bzeta{\boldsymbol{\zeta}}
+\def\lra{\leftrightarrow}
+\def\La{\Lambda}
+\def\VV{\mathcal{V}}
+\def\SO{\mathrm{SO}}
+\def\Sd{\mathrm{S}_d}
+
+\newcommand{\sset}[2]{\left\{ \, #1 \mid #2 \, \right\}}
+\newcommand{\NO}[1]{{:\!#1\!:}}
+\newcommand{\norm}[1]{\lvert #1 \rvert}
+\newcommand{\ud}[2]{^{#1}_{\phantom{#1}#2}}
+\newcommand{\du}[2]{_{#1}^{\phantom{#1}#2}}
+
+\newcommand{\Orange}{\color [rgb]{1,.5,0}}
+\newcommand{\MH}[1]{{\Orange\bf [MH: #1]}}  
+
+%% QM commands
+\newcommand{\ceil}[1]{\left \lceil #1 \right \rceil }
+\newcommand{\floor}[1]{\left \lfloor #1 \right \rfloor }
+\newcommand{\braket}[3]{\langle #1|#2|#3 \rangle}
+\newcommand{\brakket}[2]{\langle #1|#2\rangle}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle #1|}
+\newcommand{\expec}[1]{\langle #1 \rangle}
+
+\def\dps{\displaystyle}
+\def\ldef{\mathrel{\mathop:}=}
+\def\rdef{=\mathrel{\mathop:}}
+\newcommand{\limu}[1]{\mathrel{\mathop{\sim}\limits_{\scriptstyle{#1}}}}
+
+%% structural TeX commands
+\def\fns{\footnotesize}
+\newcommand{\reef}[1]{(\ref{#1})}
+\def\beq{\begin{equation}} 
+\def\eeq{\end{equation}}
+\def\nn{\nonumber} 
+\def\bsub{\begin{subequations}}
+\def\esub{\end{subequations}}
+
+%% math styles
+\def\mbb{\mathbb}
+\def\mbf{\mathbf}
+\def\mca{\mathcal}
+\def\mfr{\mathfrak}
+\def\mrm{\mathrm}
+\def\msc{\mathscr}
+\def\mtt{\mathtt}
+\def\msf{\mathsf}
+
+%% math symbols
+% \def\vee{\, \mathrm{v}\, }
+\def\th{\tfrac{1}{2}}
+\def\half{\frac{1}{2}}
+\def\lab{\bar{\lambda}}
+\def\pd{\partial}
+\def\a{\alpha}
+\def\b{\beta}
+\def\g{\gamma}
+\def\dd{\delta}
+\def\ka{\kappa}
+\def\la{\lambda}
+\def\ga{\gamma}
+\def\ze{\zeta}
+\def\DD{\Delta}
+\def\Oo{\mathcal{O}}
+\def\sO{\mathrm{O}}
+\def\l{\ell} 
+\def\eps{\epsilon}
+\def\bz{\boldsymbol{\zeta}}
+\def\vareps{\varepsilon}
+\def\bn{\mathbf{n}}
+\def\unit{\mathds{1}} % needs dsfont package
+
+\def\ddn{\mathsf{d}_N}
+\def\OON{\mathrm{O}(N)}
+\def\ba{\boldsymbol{a}}
+\def\bla{\boldsymbol{\lambda}}
+\newcommand{\threej}[6]{ \begin{pmatrix} #1 & #2 & #3 \\ #4 & #5 & #6 \end{pmatrix}}
+
+\def\Red{\color [rgb]{0.9,0.1,0.1}}
+\def\Green{\color [rgb]{0.3,0.5,0.2}}
+\def\Blue{\color [rgb]{0.3,0.5,0.8}}
+\def\dim{\text{dim}}
+
+\setlength{\parskip}{0.1in}
+\hyphenpenalty=1000
+
+\begin{document}
+
+\title{A scalar field on the strip}
+\author{MJH}
+\date\today
+
+\maketitle
+
+Consider a scalar field with mass $m_0^2$ on $[0,L]$, which boundary conditions $\phi(0) = \phi(L) = 0$. The appropriately normalized wavefunctions are
+\beq
+f_n(x) = \frac{1}{\sqrt{ \omega_n L}} \, \sin\!\left(\frac{n\pi x}{L}\right)\!,
+\quad
+\omega_n = \sqrt{ \left( \frac{n \pi}{L} \right)^2 + m_0^2}
+\eeq
+for $n=1,2,\ldots$. Hence
+\beq
+\phi(t=0,x) = \sum_{n \in \mbb{N}} f_n(x) \left[ a_n^\phd + a_n^\dagger \right].
+\eeq
+As a consistency check, we have
+\beq
+\pi(t=0,x) = \frac{\pd}{\pd t} \phi(t,x) \Big|_{t=0} = - i  \sum_{n \in \mbb{N}} \omega_n f_n(x) \left[ a_n^\phd - a_n^\dagger \right]
+\eeq
+so
+\beq
+[\phi(0,x),\pi(0,x')] = \frac{2i}{L} \sum_{n \in \mbb{N}}  \sin\!\left(\frac{n \pi x}{L}\right)\sin\!\left(\frac{n \pi x'}{L}\right) = i \delta(x-x').
+\eeq
+
+The interaction we consider is
+\beq
+H = H_0 + g V,
+\quad
+V =  \int_0^L\!dx\, \NO{\phi^2(t=0,x)}.
+\eeq
+This corresponds to shifting the mass as $m_0^2 \mapsto m_0^2 + 2g$.  We expect that the gap between the vacuum and the first excited state becomes
+\beq
+\sqrt{ \left( \frac{\pi}{L} \right)^2 + m_0^2 + 2g} = \omega_1 + \frac{g}{\omega_1} - \frac{g^2}{2\omega_1^3} + \sO(g^3).
+\eeq
+We can also predict the shift of the vacuum energy. The propagator in Euclidean time is
+\beq
+G_E(\tau,x|0,x') = \sum_n f_n(x) f_n(x') e^{-\omega_n \tau}.
+\eeq
+Hence
+\beq
+\expec{V(\tau)V(0)} = 2 \int_0^L\!dx\, dx' G_E(\tau,x|0,x')^2 = \sum_{n} \frac{1}{2\omega_n^2} e^{-2\omega_n \tau}.
+\eeq
+and the Casimir energy is given by
+\beq
+E_\text{vac}(g) = 0 - g^2 \int_0^\infty\!d\tau\,  \expec{V(\tau)V(0)}  + \sO(g^3) = - \frac{g^2}{4} \sum_n \frac{1}{\omega_n^3} + \sO(g^3).
+\eeq
+
+\beq
+V = \sum_{m,n} A_{mn} \left[ a_m^\dagger a_n^\dagger + 2 a_m^\dagger a_n^\phd + a_m^\phd a_n^\phd \right]
+\eeq
+where
+\[
+A_{mn} =  \int_0^L\!dx\, f_m(x) f_n(x) = \frac{\delta_{mn}}{2\omega_m}.
+\]
+At second order in perturbation theory, what is the spectral density $\rho_0(E)$ of the vacuum state $\ket{0}$ and likewise $\rho_1(E)$ of the first excited state $\ket{1}$?
+In formulas 
+\beq
+\rho_i(E) \ldef \sum_{\ket{\psi} \neq \ket{i}} \delta(E-E_i) |\braket{i}{V}{\psi}|^2.
+\eeq
+For example,
+\beq
+V\ket{0} = \sum_{n>m} 2 A_{mn} \ket{m,n} + \sum_{n \geq 1} \sqrt{2} A_{nn} \ket{n,n}.
+\eeq
+%  \sum_{n=1}^\infty \frac{1}{\sqrt{2} \omega_n} \ket{n,n},
+%\quad
+%\ket{n,n} = \frac{(a_n^\dagger)^2}{\sqrt{2}} \ket{0}
+and
+\begin{multline}
+V\ket{1} = (\ldots) \ket{1} + \sum_{n \geq 2 } 2 A_{1n} \ket{n} + \sqrt{6} \ket{1,1,1} + \sum_{n \geq 2} \sqrt{2} A_{nn} \ket{1,n,n} \\ + \sum_n 2\sqrt{2} A_{1,n} \ket{1,1,n} + \sum_{n > m \geq 2} 2 A_{mn} \ket{1,m,n}.
+\end{multline}
+\end{document}
+
+
+
