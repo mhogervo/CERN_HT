@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
-from functions import *
+from numpy import array, floor
+from functions import buildSpectralDensities, computeGap, getStateList, casimirEstimate
 
 #################################
 ### Set the following parameters:
@@ -29,8 +30,7 @@ else:
 ### Print a list of all relevant states:
 #################################
 
-print("We are taking the following states into account:\n\n",
-      getStateList(mu,cutoff,system),"\n")
+print("We are taking the following states into account:\n\n",getStateList(mu,cutoff,system),"\n")
 
 #################################
 ### Compute the spectral densities:
@@ -64,3 +64,4 @@ if system == "strip": # for AdS, the Casimir energy diverges
     print("The computed Casimir energy is {0},\ncompared to the theoretical value of {1}.\n".format(casimirEnergy, casimirEstimate(mu)))    
 print("The computed 2nd order contribution to the gap E_1 - E_0 is {0},\ncompared to the theoretical value of {1}.\n".format(difference, gapPrediction[1]))
 
+#################################
