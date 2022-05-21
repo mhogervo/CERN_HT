@@ -1,6 +1,6 @@
-from numpy import sqrt, pi, floor, array
+from numpy import sqrt, pi, floor
 from itertools import combinations_with_replacement as cwr
-from itertools import permutations, filterfalse
+from itertools import permutations
 
 def poch(x,n):
     '''

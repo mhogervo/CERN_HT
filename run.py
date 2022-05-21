@@ -29,7 +29,7 @@ else:
 #################################
 ### Print a list of all relevant states:
 #################################
-
+    
 print("We are taking the following states into account:\n\n",getStateList(mu,cutoff,system),"\n")
 
 #################################
@@ -48,8 +48,12 @@ print("Computing and plotting the spectral densities...\n")
 [xe, we] = array([[t[0],t[1]] for t in exSpectralDensity]).transpose()
 plt.title(plotTitle)
 binList = list(range(0,int(floor(cutoff))))
-plt.hist(xv, bins = binList, weights=wv, alpha = 0.5)
-plt.hist(xe, bins = binList, weights=we, alpha = 0.6)
+plt.xlim((0,cutoff))
+plt.xlabel(r'Energy $E$')
+plt.ylabel(r'$\rho(E)$')
+plt.hist(xv, bins = binList, weights=wv, alpha = 0.5, label = "vacuum")
+plt.hist(xe, bins = binList, weights=we, alpha = 0.5, label = "excited")
+plt.legend()
 plt.show()
 
 #################################
