@@ -100,6 +100,8 @@ def getStateList(mu,cutoff,system = "strip"):
     stateList = zeroParticleList + singleParticleList + twoParticleList + threeParticleList
     # take only states below the cutoff:
     stateList = list(filter(lambda s : energyOfState(s,mu,system) <= cutoff, stateList))
+    # take only parity-even states:
+    stateList = list(filter(lambda s : parityOfState(s,system) == 0, stateList))
     
     return sorted(stateList,key = lambda s : energyOfState(s,mu,system))
 
@@ -143,8 +145,7 @@ def amplitudeWithExc(state,mu,system = "strip"):
         return out/normOfState(state)
     else: return 0
 
-def buildSpectralDensity(mu,cutoff,system="strip",shift = False):
-
+def buildSpectralDensities(mu,cutoff,system="strip",shift = False):
     stateList = getStateList(mu,cutoff,system)
     oddStates = list(filter(lambda s : len(s) % 2 == 1, stateList)) 
     
@@ -154,22 +155,19 @@ def buildSpectralDensity(mu,cutoff,system="strip",shift = False):
     evenStates = list(filter(lambda s : len(s) % 2 == 0, stateList)) 
     
     # remove the states themselves, since they don't contribute to the spectral densities:
-   
     evenStates.remove(())
     if system == "strip":
         oddStates.remove((1,))
     elif system == "AdS":
         oddStates.remove((0,))
     
-    
     evenEnergyList = list(map(lambda s : energyOfState(s,mu,system), evenStates))
     oddEnergyList = list(map(lambda s : energyOfState(s,mu,system), oddStates))
 
-
-
+    # compute the matrix elements for all relevant states:
     vacList = list(map(lambda s : amplitudeWithVac(s,mu,system), evenStates))
     exList = list(map(lambda s : amplitudeWithExc(s,mu,system), oddStates))
-
+    # ... and square them:
     sq = lambda x : x**2
     vacList = list(map(sq, vacList))
     exList = list(map(sq, exList))
