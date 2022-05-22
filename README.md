@@ -1,5 +1,4 @@
-# CERN_HT
-Hamiltonian truncation tutorial for CERN workshop
+# Hamiltonian truncation tutorial for the CERN workshop (May 2022)
 
 This is a example Hamiltonian truncation script. It applies to both the 2d massive scalar field on R x [0,L] and its counterpart on AdS_2.
 The script computes two spectral densities that appear at second order in perturbation theory.
