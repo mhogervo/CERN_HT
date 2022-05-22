@@ -1,7 +1,7 @@
 # CERN_HT
 Hamiltonian truncation tutorial for CERN workshop
 
-This is a example Hamiltonian truncation script. It applies to both the 2d massive scalar field on R x [0,L] and on its counterpart on AdS_2.
+This is a example Hamiltonian truncation script. It applies to both the 2d massive scalar field on R x [0,L] and its counterpart on AdS_2.
 The script computes two spectral densities that appear at second order in perturbation theory.
 To run this code, you need to have Python 3 installed along with the packages NumPy and Matplotlib.
 
@@ -24,12 +24,12 @@ or
 in the top of the file run.py. 
 
 Finally, you will notice that the AdS mass gap computed using the spectral density gives a wrong result.
-In our paper, we explain how to fix this. To implement the prescription, locate the call
+In our paper, we explain how to fix this. To implement the prescription from the paper, locate the call
 
     (...) = buildSpectralDensities(mu,cutoff,system,shift = False)
 
-inside run.py, and change this to
+inside run.py, and change it to
 
     (...) = buildSpectralDensities(mu,cutoff,system,shift = True)
 
-You should be able to see the difference on the plot of the spectral densities.
+You should be able to see the difference at the level of the plot of the spectral densities.
