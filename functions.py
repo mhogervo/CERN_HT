@@ -1,6 +1,6 @@
 from numpy import sqrt, pi, floor
 from itertools import combinations_with_replacement as cwr
-from itertools import permutations
+from itertools import combinations, permutations
 
 def poch(x,n):
     '''
@@ -108,42 +108,51 @@ def getStateList(mu,cutoff,system = "strip"):
 def normOfState(state):
     return sqrt(list(permutations(state)).count(state))
 
-def amplitudeWithVac(state,mu,system = "strip"):
-    ''' 
-    Return the amplitude of a (normalized) state with the vacuum, < state | V | vac >.
+def splitList(state,n):
     '''
-    if len(state) == 2:
-        (k,l) = state
-        return 2*waveFunctionIntegral(k,l,mu,system)/normOfState(state)
+    Take a tuple (k,l,...,m) and spit out all combinations of length n and len(state) - n.
+    '''
+    if len(state) < n: return []
+    else:
+        out = []
+        for popped in combinations(state,n):
+            rest = list(state)
+            for i in popped: rest.remove(i)
+            out.append((popped,tuple(rest)))
+        return out
+    
+def matrixElement(bra,ket,mu,system = "strip"):
+    ''' 
+    Compute the matrix element < bra | V | ket >.
+    '''
+    # apply parity selection rule
+    if parityOfState(bra,system) != parityOfState(ket,system): return 0
+        
+    bra = tuple(reversed(bra)) # ordering of bra is reversed
+    if len(bra) > len(ket): # make sure the ket is always longer
+        bra, ket = map(lambda t : tuple(reversed(t)), [ket,bra])
+
+    # There are only two non-trivial cases. Either the bra and ket have the same number of particles,
+    # or the number of particles differs by 2.
+    if len(bra) == len(ket) and len(ket) >= 1:
+        out = 0
+        for i in bra:
+            for j in ket:
+                braList, ketList = list(bra), list(ket)
+                braList.remove(i), ketList.remove(j)
+                restBra, restKet = tuple(braList), tuple(ketList)
+                if sorted(restBra) == sorted(restKet):
+                    out += 2 * normOfState(restBra)**2 * waveFunctionIntegral(i,j,mu,system)
+        return out/(normOfState(bra)*normOfState(ket))
+    elif len(ket) == len(bra) + 2:
+        out = 0
+        for popped, restKet in splitList(ket,2):
+            if sorted(restKet) == sorted(bra):
+                (k,l) = popped
+                out += 2 * normOfState(restKet)**2 * waveFunctionIntegral(k,l,mu,system)
+        return out/(normOfState(bra)*normOfState(ket))
     else:
         return 0
-        
-def amplitudeWithExc(state,mu,system = "strip"):
-    ''' 
-    Return the amplitude of a (normalized) state with the single-particle state, < state | V | q >.
-    Also return 0 if state = < q |, since we don't need such states. 
-    '''
-    if system == "AdS":
-        q=0
-    elif system == "strip":
-        q=1
-    else:
-        print("System is not the strip or AdS.")
-        pass
-    
-    if len(state) == 1 and state != (q,):
-        return  2*waveFunctionIntegral(state[0],q,mu,system)
-    elif len(state) == 3:
-        (k,l,m) = state
-        out = 0
-        if k==q:
-            out += 2*waveFunctionIntegral(l,m,mu,system)
-        if l==q:
-            out += 2*waveFunctionIntegral(k,m,mu,system)
-        if m==q:
-            out += 2*waveFunctionIntegral(k,l,mu,system)
-        return out/normOfState(state)
-    else: return 0
 
 def buildSpectralDensities(mu,cutoff,system="strip",shift = False):
     stateList = getStateList(mu,cutoff,system)
@@ -157,16 +166,17 @@ def buildSpectralDensities(mu,cutoff,system="strip",shift = False):
     # remove the states themselves, since they don't contribute to the spectral densities:
     evenStates.remove(())
     if system == "strip":
-        oddStates.remove((1,))
+        q = 1
     elif system == "AdS":
-        oddStates.remove((0,))
-    
+        q = 0
+    oddStates.remove((q,))
+
     evenEnergyList = list(map(lambda s : energyOfState(s,mu,system), evenStates))
     oddEnergyList = list(map(lambda s : energyOfState(s,mu,system), oddStates))
 
     # compute the matrix elements for all relevant states:
-    vacList = list(map(lambda s : amplitudeWithVac(s,mu,system), evenStates))
-    exList = list(map(lambda s : amplitudeWithExc(s,mu,system), oddStates))
+    vacList = list(map(lambda s : matrixElement(s,(),mu,system), evenStates))
+    exList = list(map(lambda s : matrixElement(s,(q,),mu,system), oddStates))
     # ... and square them:
     sq = lambda x : x**2
     vacList = list(map(sq, vacList))
